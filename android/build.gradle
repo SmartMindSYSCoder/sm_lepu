@@ -1,0 +1,100 @@
+group = "com.sm.sm_lepu"
+version = "1.0-SNAPSHOT"
+
+
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.3.0")
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+        maven {
+            url "https://git.lepudev.com/api/v4/projects/268/packages/maven"
+            name "blepro"
+            credentials(HttpHeaderCredentials) {
+                name = 'Deploy-Token'
+                value = 'Bzn4z5F53YxRgFAQ5ED5'
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+
+        flatDir {
+//            dirs 'libs'
+
+            dirs project(':sm_lepu').file('libs')
+        }
+    }
+}
+
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+android {
+
+    if (project.android.hasProperty("namespace")) {
+        namespace = "com.sm.sm_lepu"
+    }
+
+    compileSdk = 34
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
+    }
+
+    defaultConfig {
+        minSdk = 24
+    }
+
+    dependencies {
+
+
+        testImplementation("org.jetbrains.kotlin:kotlin-test")
+        testImplementation("org.mockito:mockito-core:5.0.0")
+
+        api(name: 'lepu-blepro-1.0.6', ext: 'aar')
+
+        implementation 'no.nordicsemi.android:ble:2.2.4'
+
+        implementation 'com.github.michaellee123:LiveEventBus:1.8.14'
+
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen {false}
+                showStandardStreams = true
+            }
+        }
+    }
+
+
+}
