@@ -18,12 +18,15 @@ dependencies:
     sdk: flutter
 
   sm_lepu:
+    git: https://github.com/SmartMindSYSCoder/sm_lepu.git
+
+
     # When depending on this package from a real application you should use:
     #   sm_lepu: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
-    path: ../
+#    path: ../
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -7,7 +7,8 @@ Now it support **Aoj-20a** for temperature and **PC60FW**  for spo2
 
 To start use this plugin import it like :
 
-
+     sm_lepu:
+       git: https://github.com/SmartMindSYSCoder/sm_lepu.git
 
 Then you can check permission like:
 
