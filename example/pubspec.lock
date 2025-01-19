@@ -194,11 +194,9 @@ packages:
   sm_lepu:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "897540117a446c4afb032d4286431fb207150bcd"
-      url: "https://github.com/SmartMindSYSCoder/sm_lepu.git"
-    source: git
+      path: ".."
+      relative: true
+    source: path
     version: "0.0.1"
   source_span:
     dependency: transitive

@@ -1,17 +1,17 @@
 package com.sm.sm_lepu
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+//import androidx.lifecycle.LiveData
+//import androidx.lifecycle.MutableLiveData
 //import org.apache.commons.io.FileUtils
 
-val _bleState = MutableLiveData<Boolean>().apply {
-    value = false
-}
-val bleState: LiveData<Boolean> = _bleState
-
-val dataEcgSrc: MutableLiveData<FloatArray> by lazy {
-    MutableLiveData<FloatArray>()
-}
+//val _bleState = MutableLiveData<Boolean>().apply {
+//    value = false
+//}
+//val bleState: LiveData<Boolean> = _bleState
+//
+//val dataEcgSrc: MutableLiveData<FloatArray> by lazy {
+//    MutableLiveData<FloatArray>()
+//}
 
 
 var deviceModel = 0
