@@ -43,6 +43,11 @@ class _MyAppState extends State<MyApp> {
                 _smLepuPlugin.checkPermission();
 
               }, child: Text("Check Permission")),
+              TextButton(onPressed: (){
+
+                _smLepuPlugin.dispose();
+
+              }, child: Text("Dispose")),
               TextButton(onPressed: ()async{
 
                 _smLepuPlugin.getEvents().listen((onData){

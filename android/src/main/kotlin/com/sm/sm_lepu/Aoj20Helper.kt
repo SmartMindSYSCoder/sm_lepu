@@ -263,7 +263,12 @@ class Aoj20aHelper:BleChangeObserver {
 
 
 
+private fun dispose(){
+     BleServiceHelper.BleServiceHelper.stopScan()
 
+    BleServiceHelper.BleServiceHelper.disconnect(false)
+
+}
 
 
 

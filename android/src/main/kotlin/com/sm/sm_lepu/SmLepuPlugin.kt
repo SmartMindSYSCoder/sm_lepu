@@ -12,6 +12,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.EventChannel
+import com.lepu.blepro.ext.BleServiceHelper
 
 /** SmLepuPlugin */
 class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
@@ -67,6 +68,14 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
 
 
       }
+      "dispose" -> {
+
+
+
+        dispose()
+
+
+      }
 
       else -> {
         result.notImplemented()
@@ -103,4 +112,14 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
     activity = null
     permissionHelper = null
   }
+
+
+  private fun dispose(){
+    BleServiceHelper.BleServiceHelper.stopScan()
+
+    BleServiceHelper.BleServiceHelper.disconnect(false)
+
+  }
+
+
 }

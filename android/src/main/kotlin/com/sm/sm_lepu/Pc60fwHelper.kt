@@ -283,6 +283,12 @@ class Pc60fwHelper:BleChangeObserver {
 
 
 
+    public fun dispose(){
+        BleServiceHelper.BleServiceHelper.stopScan()
+
+        BleServiceHelper.BleServiceHelper.disconnect(false)
+
+    }
 
 
 
