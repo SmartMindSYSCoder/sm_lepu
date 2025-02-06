@@ -10,6 +10,9 @@ class SmLepu {
   Future checkPermission() async {
     await methodChannel.invokeMethod('checkPermission');
   }
+  Future<bool> isPermissionsGranted() async {
+   return await methodChannel.invokeMethod('isPermissionsGranted');
+  }
   Future<dynamic> readTemp() async {
     return  await methodChannel.invokeMethod('readTemp');
   }

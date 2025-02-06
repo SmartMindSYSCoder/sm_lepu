@@ -44,6 +44,10 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
         permissionHelper?.checkPermissions()
       }
 
+      "isPermissionsGranted" -> {
+        permissionHelper?.isPermissionsGranted()
+      }
+
       "readTemp" -> {
 
         if(permissionHelper?.isPermissionsGranted()==true){
