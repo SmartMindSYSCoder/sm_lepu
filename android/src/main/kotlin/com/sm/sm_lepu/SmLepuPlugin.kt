@@ -23,8 +23,9 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
   private var activity: Activity? = null
 
   private var permissionHelper: PermissionHelper? = null
-  private val aoj20aHelper = Aoj20aHelper()
+  private val aoj20aHelper = PC102Helper()
   private val pc60fwHelper = Pc60fwHelper()
+  private val pc102Helper = PC102Helper()
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "sm_lepu")
@@ -72,6 +73,34 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
 
 
       }
+
+
+      "startBP" -> {
+
+
+        if(permissionHelper?.isPermissionsGranted()==true){
+          pc102Helper?.startBP()
+        }
+        else{
+          permissionHelper?.checkPermissions()
+        }
+
+
+      }
+
+      "stopBP" -> {
+
+
+        if(permissionHelper?.isPermissionsGranted()==true){
+          pc102Helper?.stopBP()
+        }
+        else{
+          permissionHelper?.checkPermissions()
+        }
+
+
+      }
+
       "dispose" -> {
 
 
@@ -100,6 +129,7 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
       permissionHelper = PermissionHelper(activity!!, it)
       aoj20aHelper.initialize(activity!!, it)
       pc60fwHelper.initialize(activity!!, it)
+      pc102Helper.initialize(activity!!, it)
 
     }
   }

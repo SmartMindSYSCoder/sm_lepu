@@ -87,6 +87,25 @@ class _MyAppState extends State<MyApp> {
 
 
               }, child: Text("read Spo2")),
+              TextButton(onPressed: ()async{
+
+                _smLepuPlugin.getEvents().listen((onData){
+
+
+                  result=onData;
+                  setState(() {
+
+                  });
+
+                });
+
+                await  _smLepuPlugin.startBP();
+
+
+
+
+
+              }, child: Text("start Blood Pressure")),
 
               // Text('Running on: $_platformVersion\n'),
             ],
