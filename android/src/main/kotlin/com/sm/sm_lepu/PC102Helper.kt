@@ -177,6 +177,7 @@ class PC102Helper:BleChangeObserver {
                 jsonData.put("systolic", "${data.sys}")
                 jsonData.put("diastolic", "${data.dia}")
                 jsonData.put("heart_rate", "${data.pr}")
+                jsonData.put("isCompleted", true)
 //                jsonData.put("progress", "${data.ps}")
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
 
