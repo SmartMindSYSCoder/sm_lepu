@@ -57,7 +57,7 @@ class PC102Helper:BleChangeObserver {
     }
 
 
-    private fun init(){
+    public fun init(){
 
         initEventBus()
 
@@ -68,7 +68,6 @@ class PC102Helper:BleChangeObserver {
 
     public fun startBP(){
 
-        init();
 
         BleServiceHelper.BleServiceHelper.pc100StartBp(model)
 
@@ -130,6 +129,7 @@ class PC102Helper:BleChangeObserver {
                 jsonData.put("systolic", "0")
                 jsonData.put("diastolic", "0")
                 jsonData.put("heart_rate", "0")
+                jsonData.put("progress", "0")
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
             }
 
@@ -141,6 +141,16 @@ class PC102Helper:BleChangeObserver {
                 // data.batLevel：0-3（0：0-25%，1：25-50%，2：50-75%，3：75-100%）
                 // data.batStatus：0（No charge），1（Charging），2（Charging complete）
             }
+
+
+        LiveEventBus.get<Int>(EventMsgConst.Ble.EventBleDeviceReady)
+            .observeForever {
+
+                startBP();
+
+            }
+
+
         LiveEventBus.get<InterfaceEvent>(InterfaceEvent.PC100.EventPc100RtBpData)
             .observeForever {
                 val data = it.data as RtBpData

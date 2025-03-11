@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
 
                 });
 
-                await  _smLepuPlugin.startBP();
+                await  _smLepuPlugin.initBP();
 
 
 

@@ -20,6 +20,9 @@ class SmLepu {
     return  await methodChannel.invokeMethod('readSpo2');
   }
 
+  Future<dynamic> initBP() async {
+    return  await methodChannel.invokeMethod('initBP');
+  }
   Future<dynamic> startBP() async {
     return  await methodChannel.invokeMethod('startBP');
   }

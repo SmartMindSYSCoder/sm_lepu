@@ -75,6 +75,19 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
       }
 
 
+      "initBP" -> {
+
+
+        if(permissionHelper?.isPermissionsGranted()==true){
+          pc102Helper?.init()
+        }
+        else{
+          permissionHelper?.checkPermissions()
+        }
+
+
+      }
+
       "startBP" -> {
 
 
