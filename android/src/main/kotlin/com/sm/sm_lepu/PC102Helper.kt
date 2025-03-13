@@ -130,6 +130,8 @@ class PC102Helper:BleChangeObserver {
                 jsonData.put("diastolic", "0")
                 jsonData.put("heart_rate", "0")
                 jsonData.put("progress", "0")
+                jsonData.put("isCompleted", false)
+
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
             }
 
@@ -161,6 +163,8 @@ class PC102Helper:BleChangeObserver {
                 jsonData.put("diastolic", "0")
                 jsonData.put("heart_rate", "0")
                 jsonData.put("progress", "${data.ps}")
+                jsonData.put("isCompleted", false)
+
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
 
              //   binding.tvPs.text = "${data.ps}"
@@ -178,7 +182,8 @@ class PC102Helper:BleChangeObserver {
                 jsonData.put("diastolic", "${data.dia}")
                 jsonData.put("heart_rate", "${data.pr}")
                 jsonData.put("isCompleted", true)
-//                jsonData.put("progress", "${data.ps}")
+                jsonData.put("progress", "0")
+
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
 
 //                binding.tvSys.text = "${data.sys}"
