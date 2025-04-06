@@ -81,7 +81,7 @@ class Aoj20aHelper:BleChangeObserver {
                 Log.d(TAG, "EventServiceConnectedAndInterfaceInit")
             }
 
-        BleServiceHelper.BleServiceHelper.startScanByName(name,model)
+//        BleServiceHelper.BleServiceHelper.startScanByName(name,model)
 
         LiveEventBus.get<Bluetooth>(EventMsgConst.Discovery.EventDeviceFound)
             .observeForever  {

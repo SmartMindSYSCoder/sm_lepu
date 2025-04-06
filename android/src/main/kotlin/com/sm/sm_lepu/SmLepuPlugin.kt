@@ -23,7 +23,7 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
   private var activity: Activity? = null
 
   private var permissionHelper: PermissionHelper? = null
-  private val aoj20aHelper = PC102Helper()
+  private val aoj20aHelper = Aoj20aHelper()
   private val pc60fwHelper = Pc60fwHelper()
   private val pc102Helper = PC102Helper()
 
