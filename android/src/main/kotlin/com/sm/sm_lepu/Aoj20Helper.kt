@@ -118,6 +118,8 @@ class Aoj20aHelper:BleChangeObserver {
                 Log.d(TAG, "device name: ${deviceName} \ndevice model: ${deviceModel} \nmac address: ${deviceAddress}")
                 val jsonData = JSONObject()
                 jsonData.put("isConnected", isConnected)
+                jsonData.put("isCompleted", false)
+
                 jsonData.put("temperature", "0")
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
             }
@@ -144,16 +146,17 @@ class Aoj20aHelper:BleChangeObserver {
                     BleServiceHelper.BleServiceHelper.stopScan()
                     BleServiceHelper.BleServiceHelper.disconnect(false)
                     isConnected=false
+                    val jsonData = JSONObject()
+                    jsonData.put("isConnected", isConnected)
+                    jsonData.put("isCompleted", true)
+                    jsonData.put("temperature", data.temp.toString())
+                    SharedStreamHandler.getInstance().sendEvent(jsonData)
 
                 }
 
                // result.success(data.temp)
 
 //                sendEvent("${data.temp}")
-                val jsonData = JSONObject()
-                jsonData.put("isConnected", isConnected)
-                jsonData.put("temperature", data.temp.toString())
-                SharedStreamHandler.getInstance().sendEvent(jsonData)
 
 
             }

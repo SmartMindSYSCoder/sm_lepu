@@ -1,6 +1,6 @@
 name: sm_lepu
-description: "A new Flutter project."
-version: 0.0.6
+description: "SmartMind plugin for lepu devices"
+version: 1.0.1
 homepage:
 
 environment:

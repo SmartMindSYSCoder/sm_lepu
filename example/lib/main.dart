@@ -18,6 +18,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   final _smLepuPlugin = SmLepu();
+  String responseHistory='';
 
 
 
@@ -32,83 +33,92 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Column(
-            children: [
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
 
-              Text("result \n$result"),
-
-
-              TextButton(onPressed: (){
-
-                _smLepuPlugin.checkPermission();
-
-              }, child: Text("Check Permission")),
-              TextButton(onPressed: (){
-
-                _smLepuPlugin.dispose();
-
-              }, child: Text("Dispose")),
-              TextButton(onPressed: ()async{
-
-                _smLepuPlugin.getEvents().listen((onData){
+                Text("result \n$result"),
 
 
-                  result=onData;
-                  setState(() {
+                TextButton(onPressed: (){
 
-                  });
+                  _smLepuPlugin.checkPermission();
 
-                });
+                }, child: Text("Check Permission")),
+                TextButton(onPressed: (){
 
-                await  _smLepuPlugin.readTemp();
+                  _smLepuPlugin.dispose();
 
+                }, child: Text("Dispose")),
+                TextButton(onPressed: ()async{
 
+                  _smLepuPlugin.getEvents().listen((onData){
 
+            responseHistory+='\n\n$onData\n';
+                    result=onData;
+                    setState(() {
 
-
-              }, child: Text("read temp")),
-
-              TextButton(onPressed: ()async{
-
-                _smLepuPlugin.getEvents().listen((onData){
-
-
-                  result=onData;
-                  setState(() {
+                    });
 
                   });
 
-                });
-
-                await  _smLepuPlugin.readSpo2();
+                  await  _smLepuPlugin.readTemp();
 
 
 
 
 
-              }, child: Text("read Spo2")),
-              TextButton(onPressed: ()async{
+                }, child: Text("read temp")),
 
-                _smLepuPlugin.getEvents().listen((onData){
+                TextButton(onPressed: ()async{
+
+                  _smLepuPlugin.getEvents().listen((onData){
 
 
-                  result=onData;
-                  setState(() {
+                    result=onData;
+
+                    responseHistory+='\n\n$onData\n';
+
+                    setState(() {
+
+                    });
 
                   });
 
-                });
-
-                await  _smLepuPlugin.initBP();
+                  await  _smLepuPlugin.readSpo2();
 
 
 
 
 
-              }, child: Text("start Blood Pressure")),
+                }, child: Text("read Spo2")),
+                TextButton(onPressed: ()async{
 
-              // Text('Running on: $_platformVersion\n'),
-            ],
+                  _smLepuPlugin.getEvents().listen((onData){
+
+
+                    result=onData;
+                    setState(() {
+
+                    });
+
+                  });
+
+                  await  _smLepuPlugin.initBP();
+
+
+
+
+
+                }, child: Text("start Blood Pressure")),
+
+
+                Text("Response History \n$responseHistory"),
+
+
+                // Text('Running on: $_platformVersion\n'),
+              ],
+            ),
           ),
         ),
       ),

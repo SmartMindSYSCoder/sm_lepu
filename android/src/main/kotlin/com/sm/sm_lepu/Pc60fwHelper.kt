@@ -117,6 +117,7 @@ class Pc60fwHelper:BleChangeObserver {
 
                 val jsonData = JSONObject()
                 jsonData.put("isConnected", isConnected)
+                jsonData.put("isCompleted", false)
                 jsonData.put("spo2", "0")
                 jsonData.put("heart_rate", "0")
                 jsonData.put("pi","0")
@@ -142,14 +143,12 @@ class Pc60fwHelper:BleChangeObserver {
                     BleServiceHelper.BleServiceHelper.disconnect(false)
                     isConnected=false
 
-                    BleServiceHelper.BleServiceHelper.stopScan()
-                    BleServiceHelper.BleServiceHelper.disconnect(false)
-                    isConnected=false
 
                     data.isProbeOff=true
 
                     val jsonData = JSONObject()
                     jsonData.put("isConnected", isConnected)
+                    jsonData.put("isCompleted", true)
                     jsonData.put("spo2", data.spo2)
                     jsonData.put("heart_rate", data.pr)
                     jsonData.put("pi",data. pi)

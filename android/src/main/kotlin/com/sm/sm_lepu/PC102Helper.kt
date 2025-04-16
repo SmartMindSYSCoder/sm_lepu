@@ -126,6 +126,7 @@ class PC102Helper:BleChangeObserver {
                 Log.d(TAG, "device name: ${deviceName} \ndevice model: ${deviceModel} \nmac address: ${deviceAddress}")
                 val jsonData = JSONObject()
                 jsonData.put("isConnected", isConnected)
+
                 jsonData.put("systolic", "0")
                 jsonData.put("diastolic", "0")
                 jsonData.put("heart_rate", "0")
@@ -175,16 +176,22 @@ class PC102Helper:BleChangeObserver {
             .observeForever {
                 val data = it.data as BpResult
 
+if (data.sys >0 && data.dia >0) {
+    stopBP();
 
-                val jsonData = JSONObject()
-                jsonData.put("isConnected", isConnected)
-                jsonData.put("systolic", "${data.sys}")
-                jsonData.put("diastolic", "${data.dia}")
-                jsonData.put("heart_rate", "${data.pr}")
-                jsonData.put("isCompleted", true)
-                jsonData.put("progress", "0")
+    dispose();
 
-                SharedStreamHandler.getInstance().sendEvent(jsonData)
+    val jsonData = JSONObject()
+    jsonData.put("isConnected", isConnected)
+    jsonData.put("systolic", "${data.sys}")
+    jsonData.put("diastolic", "${data.dia}")
+    jsonData.put("heart_rate", "${data.pr}")
+    jsonData.put("isCompleted", true)
+    jsonData.put("progress", "0")
+
+    SharedStreamHandler.getInstance().sendEvent(jsonData)
+
+}
 
 //                binding.tvSys.text = "${data.sys}"
 //                binding.tvDia.text = "${data.dia}"
