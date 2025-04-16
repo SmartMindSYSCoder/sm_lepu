@@ -160,11 +160,12 @@ class PC102Helper:BleChangeObserver {
 
                 val jsonData = JSONObject()
                 jsonData.put("isConnected", isConnected)
-                jsonData.put("systolic", "0")
-                jsonData.put("diastolic", "0")
-                jsonData.put("heart_rate", "0")
-                jsonData.put("progress", "${data.ps}")
                 jsonData.put("isCompleted", false)
+
+                jsonData.put("systolic", 0)
+                jsonData.put("diastolic", 0)
+                jsonData.put("heart_rate", 0)
+                jsonData.put("progress", data.ps)
 
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
 
@@ -183,11 +184,11 @@ if (data.sys >0 && data.dia >0) {
 
     val jsonData = JSONObject()
     jsonData.put("isConnected", isConnected)
-    jsonData.put("systolic", "${data.sys}")
-    jsonData.put("diastolic", "${data.dia}")
-    jsonData.put("heart_rate", "${data.pr}")
     jsonData.put("isCompleted", true)
-    jsonData.put("progress", "0")
+    jsonData.put("systolic", data.sys)
+    jsonData.put("diastolic", data.dia)
+    jsonData.put("heart_rate", data.pr)
+    jsonData.put("progress",0)
 
     SharedStreamHandler.getInstance().sendEvent(jsonData)
 

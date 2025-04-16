@@ -52,10 +52,14 @@ class _MyAppState extends State<MyApp> {
                 }, child: Text("Dispose")),
                 TextButton(onPressed: ()async{
 
-                  _smLepuPlugin.getEvents().listen((onData){
+                  _smLepuPlugin.getEvents().listen((event){
 
-            responseHistory+='\n\n$onData\n';
-                    result=onData;
+                    result= ""
+                        "Connected :${event.isConnected}\n"
+                        "Completed :${event.isCompleted}\n"
+                        "Temperature :${event.temperature}\n"
+                        "";
+                    responseHistory+='\n\n${event.toJson()}\n';
                     setState(() {
 
                     });
@@ -72,12 +76,16 @@ class _MyAppState extends State<MyApp> {
 
                 TextButton(onPressed: ()async{
 
-                  _smLepuPlugin.getEvents().listen((onData){
+                  _smLepuPlugin.getEvents().listen((event){
 
 
-                    result=onData;
-
-                    responseHistory+='\n\n$onData\n';
+                    result= ""
+                        "Connected :${event.isConnected}\n"
+                        "Completed :${event.isCompleted}\n"
+                        "Heart Rate :${event.heartRate}\n"
+                        "Spo2 :${event.spo2}\n"
+                        "";
+                    responseHistory+='\n\n${event.toJson()}\n';
 
                     setState(() {
 
@@ -94,10 +102,16 @@ class _MyAppState extends State<MyApp> {
                 }, child: Text("read Spo2")),
                 TextButton(onPressed: ()async{
 
-                  _smLepuPlugin.getEvents().listen((onData){
+                  _smLepuPlugin.getEvents().listen((event){
 
 
-                    result=onData;
+                    result= ""
+                        "Connected :${event.isConnected}\n"
+                        "Completed :${event.isCompleted}\n"
+                        "Progress :${event.progress}\n"
+                        "systolic :${event.systolic}\n"
+                        "diastolic :${event.diastolic}\n"
+                        "";
                     setState(() {
 
                     });

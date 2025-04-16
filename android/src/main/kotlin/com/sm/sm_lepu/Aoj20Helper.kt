@@ -120,7 +120,7 @@ class Aoj20aHelper:BleChangeObserver {
                 jsonData.put("isConnected", isConnected)
                 jsonData.put("isCompleted", false)
 
-                jsonData.put("temperature", "0")
+                jsonData.put("temperature", 0)
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
             }
         LiveEventBus.get<InterfaceEvent>(InterfaceEvent.AOJ20a.EventAOJ20aDeviceData)
@@ -149,7 +149,7 @@ class Aoj20aHelper:BleChangeObserver {
                     val jsonData = JSONObject()
                     jsonData.put("isConnected", isConnected)
                     jsonData.put("isCompleted", true)
-                    jsonData.put("temperature", data.temp.toString())
+                    jsonData.put("temperature", data.temp)
                     SharedStreamHandler.getInstance().sendEvent(jsonData)
 
                 }

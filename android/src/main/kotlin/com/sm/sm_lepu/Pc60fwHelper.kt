@@ -118,9 +118,9 @@ class Pc60fwHelper:BleChangeObserver {
                 val jsonData = JSONObject()
                 jsonData.put("isConnected", isConnected)
                 jsonData.put("isCompleted", false)
-                jsonData.put("spo2", "0")
-                jsonData.put("heart_rate", "0")
-                jsonData.put("pi","0")
+                jsonData.put("spo2", 0)
+                jsonData.put("heart_rate", 0)
+                jsonData.put("pi",0)
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
 //                sendEvent()
             }
