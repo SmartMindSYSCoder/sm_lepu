@@ -1,1 +1,0 @@
-enum ReadingType{ temp,spo2,bloodPressure}
