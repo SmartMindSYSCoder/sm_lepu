@@ -15,7 +15,7 @@ import io.flutter.plugin.common.EventChannel
 import com.lepu.blepro.ext.BleServiceHelper
 
 /** SmLepuPlugin */
-class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
+class SmLepuPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   private lateinit var channel: MethodChannel
   private lateinit var lepuEventChannel: EventChannel
 
@@ -26,101 +26,116 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
   private val aoj20aHelper = Aoj20aHelper()
   private val pc60fwHelper = Pc60fwHelper()
   private val pc102Helper = PC102Helper()
+  private var weightHelper: WeightHelper? = null
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "sm_lepu")
     lepuEventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "sm_lepu_events")
 
     channel.setMethodCallHandler(this)
-
-    lepuEventChannel.setStreamHandler(SharedStreamHandler.getInstance()) // Attach EventManager
-
+    lepuEventChannel.setStreamHandler(SharedStreamHandler.getInstance())
 
     applicationContext = flutterPluginBinding.applicationContext
+    applicationContext?.let {
+      weightHelper = WeightHelper(it)
+    }
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     when (call.method) {
       "checkPermission" -> {
         permissionHelper?.checkPermissions()
+        result.success(true)
       }
 
       "isPermissionsGranted" -> {
-        permissionHelper?.isPermissionsGranted()
+        result.success(permissionHelper?.isPermissionsGranted() ?: false)
       }
 
       "readTemp" -> {
-
-        if(permissionHelper?.isPermissionsGranted()==true){
-          aoj20aHelper?.init()
-        }
-        else{
+        if (permissionHelper?.isPermissionsGranted() == true) {
+          aoj20aHelper.init()
+          result.success(true)
+        } else {
           permissionHelper?.checkPermissions()
+          result.success(false)
         }
-
-
       }
 
       "readSpo2" -> {
-
-
-        if(permissionHelper?.isPermissionsGranted()==true){
-          pc60fwHelper?.init()
-        }
-        else{
+        if (permissionHelper?.isPermissionsGranted() == true) {
+          pc60fwHelper.init()
+          result.success(true)
+        } else {
           permissionHelper?.checkPermissions()
+          result.success(false)
         }
-
-
       }
 
-
       "initBP" -> {
-
-
-        if(permissionHelper?.isPermissionsGranted()==true){
-          pc102Helper?.init()
-        }
-        else{
+        if (permissionHelper?.isPermissionsGranted() == true) {
+          pc102Helper.init()
+          result.success(true)
+        } else {
           permissionHelper?.checkPermissions()
+          result.success(false)
         }
-
-
       }
 
       "startBP" -> {
-
-
-        if(permissionHelper?.isPermissionsGranted()==true){
-          pc102Helper?.startBP()
-        }
-        else{
+        if (permissionHelper?.isPermissionsGranted() == true) {
+          pc102Helper.startBP()
+          result.success(true)
+        } else {
           permissionHelper?.checkPermissions()
+          result.success(false)
         }
-
-
       }
 
       "stopBP" -> {
-
-
-        if(permissionHelper?.isPermissionsGranted()==true){
-          pc102Helper?.stopBP()
-        }
-        else{
+        if (permissionHelper?.isPermissionsGranted() == true) {
+          pc102Helper.stopBP()
+          result.success(true)
+        } else {
           permissionHelper?.checkPermissions()
+          result.success(false)
         }
-
-
       }
 
       "dispose" -> {
-
-
-
         dispose()
+        result.success(true)
+      }
 
+      // Weight Scale Methods
+      "initWeight" -> {
+        if (permissionHelper?.isPermissionsGranted() == true) {
+          weightHelper?.init()
+          result.success(true)
+        } else {
+          permissionHelper?.checkPermissions()
+          result.success(false)
+        }
+      }
 
+      "scanWeight" -> {
+        if (permissionHelper?.isPermissionsGranted() == true) {
+          weightHelper?.scan()
+          result.success(true)
+        } else {
+          permissionHelper?.checkPermissions()
+          result.success(false)
+        }
+      }
+
+      "stopWeightScan" -> {
+        weightHelper?.stopScan()
+        result.success(true)
+      }
+
+      "disposeWeight" -> {
+        weightHelper?.dispose()
+        result.success(true)
       }
 
       else -> {
@@ -132,8 +147,6 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
     lepuEventChannel.setStreamHandler(null)
-
-
   }
 
   override fun onAttachedToActivity(activityPluginBinding: ActivityPluginBinding) {
@@ -143,7 +156,6 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
       aoj20aHelper.initialize(activity!!, it)
       pc60fwHelper.initialize(activity!!, it)
       pc102Helper.initialize(activity!!, it)
-
     }
   }
 
@@ -160,13 +172,10 @@ class SmLepuPlugin: FlutterPlugin, MethodCallHandler,ActivityAware {
     permissionHelper = null
   }
 
-
-  private fun dispose(){
+  private fun dispose() {
     BleServiceHelper.BleServiceHelper.stopScan()
-
     BleServiceHelper.BleServiceHelper.disconnect(false)
-
+    weightHelper?.dispose()
   }
-
-
 }
+

@@ -1,53 +1,96 @@
-# sm_lepu
+# SM Lepu
 
-This plugin to communicate with some of lepu devices  
-Now it support **Aoj-20a** for temperature and **PC60FW**  for spo2
-## Getting Started
+Flutter plugin for Lepu Medical Bluetooth health devices.
 
+## Supported Devices
 
-To start use this plugin import it like :
+| Device | Measurement |
+|--------|-------------|
+| **AOJ-20A** | Temperature |
+| **PC60FW** | SpO2 & Heart Rate |
+| **PC-102** | Blood Pressure |
+| **ICOMON Scale** | Weight |
 
-     sm_lepu:
-       git: https://github.com/SmartMindSYSCoder/sm_lepu.git
+## Installation
 
-Then you can check permission like:
+```yaml
+dependencies:
+  sm_lepu:
+    git: https://github.com/SmartMindSYSCoder/sm_lepu.git
+```
 
-    _smLepuPlugin.checkPermission();
+## Quick Start
 
-Now you can use the device that you need  like :
+```dart
+import 'package:sm_lepu/sm_lepu.dart';
 
-for temperature:
+final smLepu = SmLepu();
+await smLepu.checkPermission();
+```
 
+## Unified Event Model
 
-                   _smLepuPlugin.getEvents().listen((onData){
+**Single event stream for ALL devices:**
 
+```dart
+smLepu.getEvents().listen((e) {
+  switch (e.deviceType) {
+    case LepuDeviceType.temperature:
+      print('Temp: ${e.temperature}°C');
+    case LepuDeviceType.spo2:
+      print('SpO2: ${e.spo2}%, HR: ${e.heartRate}');
+    case LepuDeviceType.bloodPressure:
+      print('BP: ${e.systolic}/${e.diastolic}');
+    case LepuDeviceType.weight:
+      print('Weight: ${e.weight} kg');
+  }
+});
+```
 
-                  result=onData;
-                  setState(() {
+**LepuEventData fields:**
+- `deviceType`: Identifies device (temperature, spo2, bloodPressure, weight). Available immediately upon connection.
+- `state`: disconnected, connecting, connected, measuring, completed, error
+- `isConnected`, `isCompleted`, `hasError`, `message`, `progress`
+- `weight`: Formatted to 2 decimal places (e.g., 75.50)
+- `temperature`, `spo2`, `heartRate`, `systolic`, `diastolic`
 
-                  });
+## Device Methods
 
-                });
+```dart
+// Temperature
+await smLepu.readTemp();
 
-                await  _smLepuPlugin.readTemp();
+// SpO2
+await smLepu.readSpo2();
 
+// Blood Pressure
+await smLepu.initBP();
+await smLepu.startBP();
+await smLepu.stopBP();
 
-for spo2:
-          
-    _smLepuPlugin.getEvents().listen((onData){
+// Weight
+await smLepu.initWeight();
+await smLepu.stopWeightScan();
+await smLepu.disposeWeight();
 
+// Cleanup
+await smLepu.dispose();
+```
 
-                  result=onData;
-                  setState(() {
+## Android Permissions
 
-                  });
+```xml
+<uses-permission android:name="android.permission.BLUETOOTH"/>
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+```
 
-                });
+## Requirements
 
-                await  _smLepuPlugin.readSpo2();
+Flutter >=3.3.0 | Dart ^3.5.0 | Android minSdk 24
 
+## Author
 
-
-See the example for more understanding
-
-I hope this clear
+[SmartMind SYS](https://github.com/SmartMindSYSCoder)

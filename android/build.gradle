@@ -10,7 +10,8 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.3.0")
+        classpath("com.android.tools.build:gradle:8.3.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
     }
 }
 
@@ -19,7 +20,7 @@ rootProject.allprojects {
         maven { url 'https://jitpack.io' }
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
+        mavenCentral()
         maven {
             url "https://git.lepudev.com/api/v4/projects/268/packages/maven"
             name "blepro"
@@ -50,7 +51,7 @@ android {
         namespace = "com.sm.sm_lepu"
     }
 
-    compileSdk = 34
+    compileSdk = 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -81,6 +82,10 @@ android {
         implementation 'no.nordicsemi.android:ble:2.2.4'
 
         implementation 'com.github.michaellee123:LiveEventBus:1.8.14'
+
+        // ICOMON Weight Scale SDK
+        api(name: 'ICDeviceManager', ext: 'aar')
+        implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
 
     }
 
