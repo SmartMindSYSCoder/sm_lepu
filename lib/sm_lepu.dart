@@ -105,8 +105,7 @@ class SmLepu {
   /// Returns [LepuEventData] with deviceType indicating the source device
   Stream<LepuEventData> getEvents() {
     return _eventChannel.receiveBroadcastStream().map((event) {
-      final decodedJson = jsonDecode(event);
-      return LepuEventData.fromJson(decodedJson);
+      return LepuEventData.fromJson(event);
     });
   }
 }

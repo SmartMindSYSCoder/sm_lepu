@@ -1,6 +1,8 @@
 package com.sm.sm_lepu
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import cn.icomon.icdevicemanager.ICDeviceManager
 import cn.icomon.icdevicemanager.ICDeviceManagerDelegate
@@ -29,6 +31,22 @@ class WeightHelper(private val applicationContext: Context) :
     private var currentWeight = 0.0
     private val discoveredDevices = ArrayList<ICScanDeviceInfo>()
     private var sdkInitialized = false
+    private val handler = Handler(Looper.getMainLooper())
+    private val stopScanRunnable = Runnable {
+        Log.d(TAG, "Scan timeout reached, stopping scan")
+        stopScan()
+        
+        // Notify Flutter about the timeout error
+        try {
+            val jsonData = buildEvent(
+                hasError = true,
+                message = "Scan timeout reached"
+            )
+            sendEvent(jsonData)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error sending timeout event: ${e.message}")
+        }
+    }
 
     // User info defaults
     private val height = 170
@@ -75,9 +93,14 @@ class WeightHelper(private val applicationContext: Context) :
         discoveredDevices.clear()
         ICDeviceManager.shared().scanDevice(this)
         Log.d(TAG, "Started scanning for weight scales")
+        
+        // Start timeout timer (15 seconds)
+        handler.removeCallbacks(stopScanRunnable)
+        handler.postDelayed(stopScanRunnable, 15000)
     }
 
     fun stopScan() {
+        handler.removeCallbacks(stopScanRunnable)
         try {
             ICDeviceManager.shared().stopScan()
             Log.d(TAG, "Scan stopped")

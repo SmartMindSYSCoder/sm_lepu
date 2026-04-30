@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 /// Device type enum to identify which device sent the event
 enum LepuDeviceType {
   temperature,
@@ -82,8 +84,14 @@ class LepuEventData {
         return LepuEventData(hasError: true, message: 'Null JSON data');
       }
 
-      final Map<String, dynamic> data =
-          json is Map<String, dynamic> ? json : <String, dynamic>{};
+      final Map<String, dynamic> data;
+      if (json is String) {
+        data = Map<String, dynamic>.from(jsonDecode(json));
+      } else if (json is Map) {
+        data = Map<String, dynamic>.from(json);
+      } else {
+        data = <String, dynamic>{};
+      }
 
       // Parse common fields
       final connected = _safeBool(data['isConnected']);
