@@ -16,6 +16,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import org.json.JSONObject
 import com.lepu.blepro.ext.BleServiceHelper
 import com.lepu.blepro.observer.BleChangeObserver
 
