@@ -15,6 +15,7 @@ class Pc60fwHelper : BaseDeviceHelper() {
 
     override val model = Bluetooth.MODEL_PC60FW
     override val tagName = "Pc60fwActivity"
+    override val deviceTypeString = "spo2"
     private val name = "Pc60fw"
 
     override fun init() {

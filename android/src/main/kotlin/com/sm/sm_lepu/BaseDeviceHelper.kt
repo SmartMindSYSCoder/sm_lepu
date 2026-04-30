@@ -27,6 +27,7 @@ abstract class BaseDeviceHelper : BleChangeObserver {
     // Abstract property for the model, to be overridden by subclasses
     protected abstract val model: Int
     protected abstract val tagName: String
+    protected abstract val deviceTypeString: String
     
     // Default timeout 15 seconds
     protected var scanTimeout: Long = 15000 
@@ -34,6 +35,13 @@ abstract class BaseDeviceHelper : BleChangeObserver {
     private val stopScanRunnable = Runnable { 
         Log.d(tagName, "Scan timeout reached, stopping scan")
         BleServiceHelper.BleServiceHelper.stopScan() 
+        
+        // Notify Flutter about the timeout error
+        val jsonData = JSONObject()
+        jsonData.put("deviceType", deviceTypeString)
+        jsonData.put("hasError", true)
+        jsonData.put("message", "Scan timeout reached")
+        SharedStreamHandler.getInstance().sendEvent(jsonData)
     }
 
 

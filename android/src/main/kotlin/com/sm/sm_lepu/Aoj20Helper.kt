@@ -15,6 +15,7 @@ class Aoj20aHelper : BaseDeviceHelper() {
 
     override val model = Bluetooth.MODEL_AOJ20A
     override val tagName = "Aoj20aActivity"
+    override val deviceTypeString = "temperature"
     private val name = "Aoj-20a"
 
     override fun init() {

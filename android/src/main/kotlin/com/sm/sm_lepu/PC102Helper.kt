@@ -15,6 +15,7 @@ class PC102Helper : BaseDeviceHelper() {
 
     override val model = Bluetooth.MODEL_PC100
     override val tagName = "PC102Activity"
+    override val deviceTypeString = "bloodPressure"
     private val name = "pc100"
 
     override fun init() {
