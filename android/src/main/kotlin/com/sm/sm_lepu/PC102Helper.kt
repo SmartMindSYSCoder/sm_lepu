@@ -96,7 +96,7 @@ class PC102Helper : BaseDeviceHelper() {
                 jsonData.put("systolic", 0)
                 jsonData.put("diastolic", 0)
                 jsonData.put("heart_rate", 0)
-                jsonData.put("progress", data.ps)
+                jsonData.put("progress", data.ps.toDouble())
 
                 SharedStreamHandler.getInstance().sendEvent(jsonData)
             }

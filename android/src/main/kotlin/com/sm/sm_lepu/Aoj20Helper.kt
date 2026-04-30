@@ -81,7 +81,7 @@ class Aoj20aHelper : BaseDeviceHelper() {
                     jsonData.put("deviceType", "temperature")
                     jsonData.put("isConnected", false)
                     jsonData.put("isCompleted", true)
-                    jsonData.put("temperature", data.temp)
+                    jsonData.put("temperature", data.temp.toDouble())
                     SharedStreamHandler.getInstance().sendEvent(jsonData)
                 }
             }

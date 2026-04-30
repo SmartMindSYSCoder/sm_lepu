@@ -84,7 +84,7 @@ class Pc60fwHelper : BaseDeviceHelper() {
                     jsonData.put("isCompleted", true)
                     jsonData.put("spo2", data.spo2)
                     jsonData.put("heart_rate", data.pr)
-                    jsonData.put("pi",data. pi)
+                    jsonData.put("pi", data.pi.toDouble())
                     SharedStreamHandler.getInstance().sendEvent(jsonData)
                 }
             }
